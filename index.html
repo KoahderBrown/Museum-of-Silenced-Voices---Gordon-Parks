@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gordon Parks Exhibit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background: #f5f5f0;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23333" width="1200" height="400"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 0.9em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .intro-section {
+            background: white;
+            padding: 60px 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .intro-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+            border-bottom: 3px solid #d4af37;
+            padding-bottom: 15px;
+        }
+
+        .intro-section p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .artifacts-grid {
+            display: grid;
+            gap: 60px;
+        }
+
+        .artifact {
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .artifact:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .artifact-image {
+            width: 100%;
+            height: 400px;
+            background: #e0e0e0;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: #666;
+            border: 1px solid #ccc;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .artifact-number {
+            color: #d4af37;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .artifact h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .artifact-meta {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .artifact-label {
+            font-size: 1.05em;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .comparison-section {
+            background: #2c2c2c;
+            color: white;
+            padding: 60px 40px;
+            margin-top: 60px;
+        }
+
+        .comparison-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #d4af37;
+            text-align: center;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .comparison-box {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-left: 4px solid #d4af37;
+        }
+
+        .comparison-box h3 {
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+
+        .comparison-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .comparison-box li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .comparison-box li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-note {
+            font-size: 0.9em;
+            color: #999;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .artifact-image {
+                height: 300px;
+            }
+        }
+
+        /* Music tooltip styles */
+        #musicInfo {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-family: Georgia, serif;
+            font-size: 12px;
+            max-width: 250px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #musicInfo.show {
+            opacity: 1;
+        }
+
+        #musicInfo::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 30px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0,0,0,0.85);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="blowing_your_mind.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control Button -->
+    <button id="musicToggle" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: #d4af37; color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-family: Georgia, serif; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">
+        🎵 Play Music
+    </button>
+    
+    <!-- Music Info Tooltip (shows on hover) -->
+    <div id="musicInfo">
+        <em>Main theme song in Gordon Parks's most famous movie - Shaft (1971)</em>
+    </div>
+
+    <script>
+        var audio = document.getElementById('backgroundMusic');
+        var toggleBtn = document.getElementById('musicToggle');
+        var musicInfo = document.getElementById('musicInfo');
+        var isPlaying = false;
+
+        // Show tooltip on hover
+        toggleBtn.addEventListener('mouseenter', function() {
+            musicInfo.classList.add('show');
+        });
+
+        toggleBtn.addEventListener('mouseleave', function() {
+            musicInfo.classList.remove('show');
+        });
+
+        // Try autoplay on load
+        window.addEventListener('load', function() {
+            var playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(function() {
+                    isPlaying = true;
+                    toggleBtn.innerHTML = '🎵 Pause Music';
+                }).catch(function(error) {
+                    // Autoplay blocked, button will allow manual play
+                    isPlaying = false;
+                });
+            }
+        });
+
+        // Toggle music on button click
+        toggleBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                toggleBtn.innerHTML = '🎵 Play Music';
+                isPlaying = false;
+            } else {
+                audio.play();
+                toggleBtn.innerHTML = '🎵 Pause Music';
+                isPlaying = true;
+            }
+        });
+    </script>
+
+    <header>
+        <div class="subtitle">The Legacy of Zora Neale Hurston in the American Imagination
+        </div>
+        <h1>Gordon Parks's Exhibit</h1>
+        <p class="tagline">The Invisible Become Visible</p>
+    </header>
+
+    <div class="container">
+        <section class="intro-section">
+            <h2>Exhibit Introduction</h2>
+            <p>Gordon Parks (1912-2006) was born in Fort Scott, Kansas. After high school, Parks began teaching himself how to create art, specifically, he focused on how to become a better filmmaker, photographer, writer, and composer. His life’s work was focused around capturing the African American experience. Like Zora Neale Hurston, Gordon Park set out to capture the poverty, racism, and lack of representation that Black people faced. This exhibit will explore how Park used each of these means to fight against Black oppression.</p>
+        </section>
+
+        <div class="artifacts-grid">
+            <article class="artifact">
+                <div class="artifact-number">ARTIFACT 01</div>
+                <div class="artifact-image" style="background-image: url('american_gothic1.png'); background-size: contain; background-position: center;">
+                    <!-- Replace INSERT_IMAGE_URL_HERE with actual image URL -->
+                </div>
+                <h3>American Gothic</h3>
+                <div class="artifact-meta">Photograph (1942) - Taken in Washington, DC</div>
+                <p class="artifact-label">The photograph above shows Ella Watson, a cleaning lady for a security administration building, standing in front of an American flag with a broom and mop. Parks created this image after hearing about Watson’s struggles with trying to feed her family despite having multiple jobs. Park also wanted to challenge Grant Wood’s famous painting “American Gothic” by replacing a White family with a Black worker, resisting the stereotype that black workers are seen as invisible labor. Additionally, Park’s goal was to give more voice to struggles in the Black labor community.</p>
+            </article>
+
+            <article class="artifact">
+                <div class="artifact-number">ARTIFACT 02</div>
+                <div class="artifact-image" style="background-image: url('redjackson.png'); background-size: contain; background-position: center;">
+                    <!-- Replace INSERT_IMAGE_URL_HERE with actual image URL -->
+                </div>
+                <h3>Red Jackson, Harlem Gang Leader</h3>
+                <div class="artifact-meta">Photograph (1948) - Taken in Harlem, New York</div>
+                <p class="artifact-label">The portrait above is of Red Jackson, a Harlem gang leader expressing peace rather than violence. Park’s goal of this photograph was to show gang members showing curiosity rather than judgment or fear. At this time, young Black men in urban areas were seen as criminals and threats, so by taking these pictures, Park humanized them showing their real personalities. </p>
+            </article>
+
+            <article class="artifact">
+                <div class="artifact-number">ARTIFACT 03</div>
+                <div class="artifact-image" style="background-image: url('emerging_man.png'); background-size: cover; background-position: center;">
+                    <!-- Replace INSERT_IMAGE_URL_HERE with actual image URL -->
+                </div>
+                <h3>Emerging Man</h3>
+                <div class="artifact-meta">Photograph (1952) - Taken in Harlem, New York</div>
+                <p class="artifact-label">This image shows a Black man emerging from a manhole, pulling himself up from the darkness. Parks created this image to show how Black people have struggled for equality and visibility. By showing someone slightly coming out of a place of hiding, Parks expresses his thoughts around oppression and representation of Black people. Parks resists the stereotype of Black voices being unheard/not important by capturing a moment of emergence.</p>
+            </article>
+
+            <article class="artifact">
+                <div class="artifact-number">ARTIFACT 04</div>
+                <div style="width: 100%; margin-bottom: 25px;">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe width="100%" height="600px" src="https://www.youtube.com/embed/GtW0XES3ExQ?si=6ob5X-Vfz7fhowYi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <h3>Shaft Trailer (1971)</h3>
+                <div class="artifact-meta">Trailer of the Movie Shaft - A film directed by Gordon Parks</div>
+                <p class="artifact-label">In 1971, Gordon Parks became the first African American to direct a major Hollywood studio film (Shaft). The film tells the story of John Shaft, a private detective, who is hired by a Harlem crime boss to rescue his daughter.</p>
+                <p class="artifact-label">During the making of this movie, Black actors were often supporting roles or villains, so by making the main character a Black man, Parks actively resisted the film industry. Like Hurston’s main character Janie, John Shaft has self-determination and refuses to be defined by white expectations, making the film an important step in the fight for Black representation.</p>
+            </article>
+        </div>
+    </div>
+    <footer>
+        <p><strong>Museum of Silenced Voices</strong></p>
+        </footer>
+</body>
+</html>
